@@ -1,27 +1,31 @@
 <*+ MAIN *>
 MODULE search;
 
-IMPORT InOut;
+IMPORT Out;
 
 VAR
-  i: INTEGER; 
+  i: LONGINT; 
   a: ARRAY 100 OF INTEGER;
 
 (* 1.8.1: Linear search as stated by N. Wirth *)
-PROCEDURE Search(a: ARRAY OF INTEGER; n: INTEGER; v: INTEGER): INTEGER;
-VAR i: INTEGER;
+PROCEDURE Search(a: ARRAY OF INTEGER; v: INTEGER): LONGINT;
+VAR i: LONGINT;
 BEGIN
   i := 0;
-  WHILE (i < n) & (a[i] # v) DO INC(i) END;
-  RETURN i;
+  WHILE (i < LEN(a)) & (a[i] # v) DO INC(i) END;
+  IF i = LEN(a) THEN 
+    RETURN -1 
+  ELSE
+    RETURN i
+  END;
 END Search;
 
 (*  1.8.2: The latest (efficient) version of binary search *)
-PROCEDURE BSearch(a: ARRAY OF INTEGER; n: INTEGER; v: INTEGER): INTEGER;
-VAR l, r, m: INTEGER;
+PROCEDURE BSearch(a: ARRAY OF INTEGER; v: INTEGER): LONGINT;
+VAR l, r, m: LONGINT;
 BEGIN
   l := 0;
-  r := n;
+  r := LEN(a);
   WHILE (l < r) DO
     m := (l + r - 1) DIV 2;
     IF a[m] < v THEN
@@ -30,39 +34,52 @@ BEGIN
       r := m;
     END; 
   END;
-  RETURN r;
+  IF r = LEN(a) THEN
+    RETURN -1
+  ELSE
+    RETURN r
+  END;
 END BSearch;
 
 BEGIN
-  FOR i := 0 TO 99 DO a[i] := i + 1 END;
+  FOR i := 1 TO LEN(a)-1 DO a[i] := a[i-1] + 1 END;
   
-  InOut.WriteString("Searching for 99 in the array of 100 numbers"); 
-  InOut.WriteLn();
+  Out.String("Searching in the sorted array [0, 1, 2, .., 99]"); 
+  Out.Ln();
   
-  InOut.WriteString("- Linear search: ");
-  i := Search(a, 100, 99);
-  InOut.WriteInt(i, 1);
-  InOut.WriteLn();
+  Out.String("- Linear search: indexOf(89) = ");
+  i := Search(a, 89);
+  Out.Int(i, 1);
+  Out.Ln();
   
-  InOut.WriteString("- Binary search: ");
-  i := BSearch(a, 100, 99);
-  InOut.WriteInt(i, 1);
-  InOut.WriteLn();
+  Out.String("- Binary search: indexOf(89) = ");
+  i := BSearch(a, 89);
+  Out.Int(i, 1);
+  Out.Ln();
   
-  InOut.WriteLn();
+  Out.Ln();
+  (*-------------------------------------------------------------- *)  
+  Out.String("- Linear search: indexOf(1) = ");
+  i := Search(a, 1);
+  Out.Int(i, 1);
+  Out.Ln();
+    
+  Out.String("- Binary search: indexOf(1) = ");
+  i := BSearch(a, 1);
+  Out.Int(i, 1);
+  Out.Ln();
+  
+  Out.Ln();
   (*-------------------------------------------------------------- *)
-  
-  InOut.WriteString("Searching for 1 in the array of 100 numbers"); 
-  InOut.WriteLn();
-    
-  InOut.WriteString("- Linear search: ");
-  i := Search(a, 100, 1);
-  InOut.WriteInt(i, 1);
-  InOut.WriteLn();
-    
-  InOut.WriteString("- Binary search: ");
-  i := BSearch(a, 100, 1);
-  InOut.WriteInt(i, 1);
-  InOut.WriteLn();
+        
+  Out.String("- Linear search: indexOf(200) = ");
+  i := Search(a, 200);
+  Out.Int(i, 1);
+  Out.Ln();
+      
+  Out.String("- Binary search: indexOf(200) = ");
+  i := BSearch(a, 200);
+  Out.Int(i, 1);
+  Out.Ln();
     
 END search.
