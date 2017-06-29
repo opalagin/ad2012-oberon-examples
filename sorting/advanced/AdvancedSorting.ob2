@@ -48,7 +48,7 @@ VAR
   N, L, R: LONGINT;
   x: INTEGER;
 
-  PROCEDURE Sift(VAR a: ARRAY OF INTEGER; L, R: LONGINT);
+  PROCEDURE sift(L, R: LONGINT);
   VAR 
     i, j: LONGINT;
     x: INTEGER;
@@ -70,7 +70,7 @@ VAR
     END;
   
     a[i] := x;
-  END Sift;
+  END sift;
 
 BEGIN
   N := LEN(a);
@@ -79,15 +79,55 @@ BEGIN
   
   WHILE L > 0 DO
     DEC(L);
-    Sift(a, L, R);
+    sift(L, R);
   END;
   
   WHILE R > 0 DO
     x := a[0]; a[0] := a[R]; a[R] := x;
     DEC(R);
-    Sift(a, L, R);
+    sift(L, R);
   END;
 END HeapSort;
+
+
+(* 2.3.3 Partition Sort (Quicksort) *)
+PROCEDURE QuickSort(VAR a: ARRAY OF INTEGER);
+VAR 
+  N: LONGINT;
+  
+  PROCEDURE sort(L, R: LONGINT);
+  VAR
+    i, j: LONGINT;
+    x, w: INTEGER;
+  BEGIN
+    i := L; j := R;
+    (* partition *)
+    x := a[(L + R) DIV 2];
+    REPEAT
+      WHILE a[i] < x DO 
+        INC(i); 
+      END;
+      WHILE x < a[j] DO 
+        DEC(j); 
+      END;
+      IF (i <= j) THEN
+        w := a[i]; a[i] := a[j]; a[j] := w;
+        INC(i); DEC(j);
+      END;
+    UNTIL i > j;
+    (* recursively sort partitions *)
+    IF (L < j) THEN 
+      sort(L, j); 
+    END;
+    IF (i < R) THEN 
+      sort(i, R); 
+    END;
+  END sort;
+
+BEGIN
+  N := LEN(a);
+  sort(0, N - 1);
+END QuickSort;
 
 BEGIN
   a0[0] := 6; 
@@ -112,6 +152,13 @@ BEGIN
   Utils.CopyArray(a0, a1);
   Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
   HeapSort(a1);
+  Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
+  
+  Out.Ln();
+  Out.String("--- Quick Sort ---"); Out.Ln();
+  Utils.CopyArray(a0, a1);
+  Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
+  QuickSort(a1);
   Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
     
 END AdvancedSorting.
