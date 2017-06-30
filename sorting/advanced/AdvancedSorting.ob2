@@ -5,6 +5,7 @@ IMPORT Out, Utils;
 
 VAR 
   a0, a1: ARRAY 10 OF INTEGER;
+  k: LONGINT;
 
 (* Insertion Sort By Diminishing Increment (ShellSort) *)
 PROCEDURE ShellSort(VAR a: ARRAY OF INTEGER);
@@ -129,6 +130,70 @@ BEGIN
   sort(0, N - 1);
 END QuickSort;
 
+
+(* 2.3.3 Non-recursive Quicksort *)
+PROCEDURE NRQuickSort(VAR a: ARRAY OF INTEGER);
+CONST M = 12; (* OP: this can be computed as log(N) *)
+  VAR
+    i, j, L, R, s, N: LONGINT;
+    x, w: INTEGER;
+    low, high: ARRAY M OF LONGINT; (* index stack *)
+BEGIN 
+  N := LEN(a);
+  s := 0; low[0] := 0; high[0] := N - 1;
+  REPEAT (* take top request from stack *)
+    L := low[s]; R := high[s]; DEC(s);
+    REPEAT (* partition a[L]..a[R] *)
+      i := L; j := R; x := a[(L + R) DIV 2];
+      REPEAT
+        WHILE a[i] < x DO INC(i) END;
+        WHILE x < a[j] DO DEC(j) END;
+        IF i <= j THEN
+          w := a[i]; a[i] := a[j]; a[j] := w;
+          INC(i); DEC(j);
+        END;
+      UNTIL i > j;
+      IF i < R THEN (* stack request to sort right partition *)
+        INC(s); low[s] := i; high[s] := R;
+      END;
+      R := j; (* now L and R delimit left partition *)
+    UNTIL L >= R;
+  UNTIL s < 0;
+END NRQuickSort;
+
+
+(* 2.3.4 Finding the Media (k-th smallest of n items) *)
+PROCEDURE Find(VAR a: ARRAY OF INTEGER; k: LONGINT);
+VAR 
+  i, j, N, L, R: LONGINT;
+  x, w: INTEGER;
+BEGIN
+  N := LEN(a);
+  L := 0; R := N - 1;
+  WHILE L < R - 1 DO 
+    x := a[k]; i := L; j := R;
+    REPEAT
+      WHILE a[i] < x DO 
+        INC(i)
+      END;
+      WHILE x < a[j]DO 
+        DEC(j)
+      END;
+      IF i <= j THEN
+        w := a[i]; a[i] := a[j]; a[j] := w;
+        INC(i); DEC(j);
+      END;
+    UNTIL i > j;
+    IF j < k THEN 
+      L := i 
+    END;
+    IF k < i THEN 
+      R := j 
+    END; 
+  END;
+END Find;
+
+(* MAIN *)
 BEGIN
   a0[0] := 6; 
   a0[1] := 9; 
@@ -136,7 +201,7 @@ BEGIN
   a0[3] := 2; 
   a0[4] := 4; 
   a0[5] := 3; 
-  a0[6] := 7; 
+  a0[6] := 7;  
   a0[7] := 5; 
   a0[8] := 8; 
   a0[9] := 0;
@@ -160,6 +225,20 @@ BEGIN
   Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
   QuickSort(a1);
   Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
-    
+  
+  Out.Ln();
+  Out.String("--- Non-recursive Quick Sort ---"); Out.Ln();
+  Utils.CopyArray(a0, a1);
+  Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
+  NRQuickSort(a1);
+  Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
+  
+  Out.Ln();
+  Out.String("--- Finding median ---"); Out.Ln();
+  Utils.CopyArray(a0, a1);
+  Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
+  k := LEN(a1) DIV 2;
+  Out.String("Median = "); Find(a1, k); Out.Int(a1[k], 0); Out.Ln();
+      
 END AdvancedSorting.
 
