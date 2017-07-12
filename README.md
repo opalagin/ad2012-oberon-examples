@@ -19,12 +19,21 @@ String:
 - KMP search
 - BM search
 
+Advanced Sorting:
+- Shell Sort
+- Heap Sort
+- Quick Sort
+
+Sorting Sequences (Files):
+- Merge Sort
+- Natural Merging
+
 ## Differences from original code
 
 - Arrays are usually fixed size in the book. Though here size is determined in runtime using LEN() command
 - Book introduces notion of NULL-terminated strings but doesn't use them in string search examples. Here all strings are NULL-terminated
   and there length is computed in runtime. Though usually array size is 255.
-
+- All operations on standard input/output are based on Oberon-2/XDS implementation.
 
 ## Building
 
