@@ -27,6 +27,7 @@ Advanced Sorting:
 Sorting Sequences (Files):
 - Merge Sort
 - Natural Merging
+- Balanced Merge
 
 ## Differences from original code
 
