@@ -28,6 +28,7 @@ Sorting Sequences (Files):
 - Merge Sort
 - Natural Merging
 - Balanced Merge
+- Polyphase Merge
 
 ## Differences from original code
 
@@ -36,7 +37,7 @@ Sorting Sequences (Files):
   and there length is computed in runtime. Though usually array size is 255.
 - All operations on standard input/output are based on Oberon-2/XDS implementation.
 
-## Building
+## Building (Linux and Windows)
 
 1. Download and install XDS SDK from https://www.excelsior-usa.com/xds.html#downloads 
 2. Add xc executable to your search path.

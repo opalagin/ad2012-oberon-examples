@@ -1,0 +1,5 @@
+-lineno
+-gendebug
+-nooptimize
+-lookup = *.ob2   = ../
+!module PolyphaseMerge.ob2
