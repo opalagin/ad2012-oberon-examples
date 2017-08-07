@@ -1,0 +1,7 @@
++changesym
+-lookup = *.ob2 = ../shared/
+-GUI+
++MULTITHREAD
+
+!module VTerm.lib
+!module HilbertCurve.ob2
