@@ -37,16 +37,24 @@ Recursion:
 - Hilbert and Sierpinski curves
 - Knight's Tour
 - Eight Queens
+- Stable Marriage
 
 ## Differences from original code
 
 - Arrays are usually fixed size in the book. Though here size is determined in runtime using LEN() command
 - Book introduces notion of NULL-terminated strings but doesn't use them in string search examples. Here all strings are NULL-terminated
   and there length is computed in runtime. Though usually array size is 255.
-- All operations on standard input/output are based on Oberon-2/XDS implementation.
+- All operations on standard input/output are based on Oberon-2 implementation.
+For example, Text.Scan() is replaced with In.Int() or Out.Int() is used instead of Text.WriteInt().
 
 ## Building (Linux and Windows)
 
+### XDS projects (file with .prj exists)
 1. Download and install XDS SDK from https://www.excelsior-usa.com/xds.html#downloads
 2. Add xc executable to your search path.
 3. Use xc to compile a project. For example: xc =project exp/exp.prj
+
+### OBC projects
+1. Download and install Oxford Oberon-2 compiler from [here](http://spivey.oriel.ox.ac.uk/corner/Installing_OBC_release_3.0)
+2. Add obc executable to your search path
+3. Use obc to compile module. For example: obc -o app EightQueens.m
