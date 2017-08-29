@@ -42,6 +42,9 @@ BEGIN
         END
     UNTIL (i = r) OR ~S;
 
+    (* First condition is not met *)
+    IF ~S THEN RETURN FALSE END;
+
     i := -1; lim := rwm[w,m];
     REPEAT
         INC(i);
