@@ -1,19 +1,17 @@
-<*+ MAIN *>
 MODULE StraightMerging;
 
 IMPORT Out, Utils;
 
-VAR 
+VAR
   a0, a1: ARRAY 20 OF INTEGER;
-  i: LONGINT;
 
 PROCEDURE StraightMerge(VAR a: ARRAY OF INTEGER);
 VAR
-  i, j, k, L, t: LONGINT; (*index range of a is 0..2*n-1*)
-  h, m, p, q, r: LONGINT; up: BOOLEAN;
-  n: LONGINT;
+  i, j, k, L, t: INTEGER; (* index range of a is 0..2*n-1 *)
+  h, m, p, q, r: INTEGER; up: BOOLEAN;
+  n: INTEGER;
 BEGIN
-  n := LEN(a)DIV 2;
+  n := LEN(a) DIV 2;
   up := TRUE; p := 1;
   REPEAT
     h := 1; m := n;
@@ -22,7 +20,7 @@ BEGIN
     ELSE
       k := 0; L := n - 1; i := n; j := 2 * n - 1;
     END;
-    REPEAT (*merge a run from i- and j-sources to k-destination *)
+    REPEAT (* merge a run from i- and j-sources to k-destination *)
       IF m >= p THEN q := p ELSE q := m END;
       m := m - q;
       IF m >= p THEN r := p ELSE r := m END;
@@ -45,7 +43,7 @@ BEGIN
     up := ~up; p := 2 * p;
   UNTIL p >= n;
   IF ~up THEN
-    FOR i := 0 TO n - 1 DO 
+    FOR i := 0 TO n - 1 DO
       a[i] := a[i + n]
     END
   END;
@@ -53,21 +51,21 @@ END StraightMerge;
 
 
 BEGIN
-  a0[0] := 6; 
-  a0[1] := 9; 
-  a0[2] := 1; 
-  a0[3] := 2; 
-  a0[4] := 4; 
-  a0[5] := 3; 
-  a0[6] := 7; 
-  a0[7] := 5; 
-  a0[8] := 8; 
+  a0[0] := 6;
+  a0[1] := 9;
+  a0[2] := 1;
+  a0[3] := 2;
+  a0[4] := 4;
+  a0[5] := 3;
+  a0[6] := 7;
+  a0[7] := 5;
+  a0[8] := 8;
   a0[9] := 10;
-      
+
   Out.String("--- Straight Merge Sort ---"); Out.Ln();
   Utils.CopyArray(a0, a1);
   Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
   StraightMerge(a1);
   Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
-   
+
 END StraightMerging.
