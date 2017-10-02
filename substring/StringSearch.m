@@ -7,7 +7,6 @@ TYPE
   String = ARRAY 255 OF CHAR;
 
 VAR
-  i: INTEGER;
   test, a, b: String;
 
 (* 1.9.1: Straight String Search *)
@@ -133,79 +132,34 @@ END BMIndexOf;
 
 (* MAIN *)
 BEGIN
-    test[0]  := 'H';
-    test[1]  := 'o';
-    test[2]  := 'o';
-    test[3]  := 'l';
-    test[4]  := 'a';
-    test[5]  := '-';
-    test[6]  := 'H';
-    test[7]  := 'o';
-    test[8]  := 'o';
-    test[9]  := 'l';
-    test[10] := 'a';
-    test[11] := ' ';
-    test[12] := 'g';
-    test[13] := 'i';
-    test[14] := 'r';
-    test[15] := 'l';
-    test[16] := 's';
-    test[17] := ' ';
-    test[18] := 'l';
-    test[19] := 'i';
-    test[20] := 'k';
-    test[21] := 'e';
-    test[22] := ' ';
-    test[23] := 'H';
-    test[24] := 'o';
-    test[25] := 'o';
-    test[26] := 'l';
-    test[27] := 'i';
-    test[28] := 'g';
-    test[29] := 'a';
-    test[30] := 'n';
-    test[31] := '.';
-    test[32] := CHR(0);
+  test := "Hoola-Hoola girls like Hooligan.";
 
-    a[0] := 'H';
-    a[1] := 'o';
-    a[2] := 'o';
-    a[3] := 'l';
-    a[4] := 'i';
-    a[5] := 'g';
-    a[6] := 'a';
-    a[7] := 'n';
-    a[8] := CHR(0);
+  a := "Hooligan";
+  b := "Hola";
 
-    b[0] := 'H';
-    b[1] := 'o';
-    b[2] := 'l';
-    b[3] := 'a';
-    b[4] := CHR(0);
+  Out.String("S = ");
+  Out.String(test);
+  Out.Ln();
 
-    Out.String("S = ");
-    Out.String(test);
-    Out.Ln();
+  Out.String("Straight indexOf('"); Out.String(a); Out.String("'): ");
+  Out.Int(IndexOf(a, test), 0);
+  Out.Ln();
+  Out.String("Straight indexOf('"); Out.String(b); Out.String("'): ");
+  Out.Int(IndexOf(b, test), 0);
+  Out.Ln();
 
-    Out.String("Straight indexOf('"); Out.String(a); Out.String("'): ");
-    Out.Int(IndexOf(a, test), 0);
-    Out.Ln();
-    Out.String("Straight indexOf('"); Out.String(b); Out.String("'): ");
-    Out.Int(IndexOf(b, test), 0);
-    Out.Ln();
+  Out.String("KMP indexOf('"); Out.String(a); Out.String("'): ");
+  Out.Int(KMPIndexOf(a, test), 0);
+  Out.Ln();
+  Out.String("KMP indexOf('"); Out.String(b); Out.String("'): ");
+  Out.Int(KMPIndexOf(b, test), 0);
+  Out.Ln();
 
-    Out.String("KMP indexOf('"); Out.String(a); Out.String("'): ");
-    Out.Int(KMPIndexOf(a, test), 0);
-    Out.Ln();
-    Out.String("KMP indexOf('"); Out.String(b); Out.String("'): ");
-    Out.Int(KMPIndexOf(b, test), 0);
-    Out.Ln();
-
-    Out.String("BM indexOf('"); Out.String(a); Out.String("'): ");
-    Out.Int(BMIndexOf(a, test), 0);
-    Out.Ln();
-    Out.String("BM indexOf('"); Out.String(b); Out.String("'): ");
-    Out.Int(BMIndexOf(b, test), 0);
-    Out.Ln();
+  Out.String("BM indexOf('"); Out.String(a); Out.String("'): ");
+  Out.Int(BMIndexOf(a, test), 0);
+  Out.Ln();
+  Out.String("BM indexOf('"); Out.String(b); Out.String("'): ");
+  Out.Int(BMIndexOf(b, test), 0);
+  Out.Ln();
 
 END StringSearch.
