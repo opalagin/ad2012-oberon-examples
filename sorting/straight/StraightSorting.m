@@ -33,14 +33,14 @@ BEGIN
     L := 0;
     R := i;
     WHILE (L < R) DO
-      m := (L + R)DIV 2;
+      m := (L + R) DIV 2;
       IF (x >= a[m]) THEN
         L := m + 1;
       ELSE
         R := m
       END;
     END;
-    FOR j := i TO R + 1 BY - 1 DO
+    FOR j := i TO R + 1 BY -1 DO
       a[j] := a[j - 1];
     END;
     a[R] := x;
@@ -88,6 +88,34 @@ BEGIN
   END;
 END BubbleSort;
 
+PROCEDURE ShakerSort(VAR a: ARRAY OF INTEGER);
+VAR
+j, k, L, R: INTEGER;
+x, n: INTEGER;
+BEGIN
+  n := LEN(a);
+  L := 1; R := n-1; k := R;
+  REPEAT
+    FOR j := R TO L BY -1 DO
+      IF a[j-1] > a[j] THEN
+        x := a[j-1];
+        a[j-1] := a[j];
+        a[j] := x;
+        k := j;
+      END
+    END;
+    L := k + 1;
+    FOR j := L TO R BY +1 DO
+      IF a[j-1] > a[j] THEN
+        x := a[j-1];
+        a[j-1] := a[j];
+        a[j] := x;
+        k := j;
+      END
+    END;
+    R := k - 1
+  UNTIL L > R
+END ShakerSort;
 
 BEGIN
   a0[0] := 6;
@@ -129,6 +157,14 @@ BEGIN
   Utils.CopyArray(a0, a1);
   Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
   BubbleSort(a1);
+  Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
+
+  Out.Ln();
+
+  Out.String("--- Shaker Sort ---"); Out.Ln();
+  Utils.CopyArray(a0, a1);
+  Out.String("Unsorted = "); Utils.PrintArray(a1); Out.Ln();
+  ShakerSort(a1);
   Out.String("Sorted = "); Utils.PrintArray(a1); Out.Ln();
 
 END StraightSorting.
