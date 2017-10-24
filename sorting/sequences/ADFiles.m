@@ -1,4 +1,4 @@
-MODULE Files;
+MODULE ADFiles;
 
 IMPORT Out;
 
@@ -111,4 +111,4 @@ BEGIN
 END ReadInt;
 
 BEGIN
-END Files.
+END ADFiles.

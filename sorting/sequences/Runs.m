@@ -1,52 +1,52 @@
 MODULE Runs;
 
-IMPORT Files, Out;
+IMPORT ADFiles, Out;
 
 TYPE 
   Rider* = RECORD 
-  (Files.Rider) first*: INTEGER; eor*: BOOLEAN 
+  (ADFiles.Rider) first*: INTEGER; eor*: BOOLEAN 
   END;
   
-PROCEDURE OpenRandomSeq*(f: Files.File; length, seed: INTEGER);
+PROCEDURE OpenRandomSeq*(f: ADFiles.File; length, seed: INTEGER);
 VAR 
-  i: INTEGER; w: Files.Rider;
+  i: INTEGER; w: ADFiles.Rider;
 BEGIN
-  Files.Set(w, f, 0);
+  ADFiles.Set(w, f, 0);
   FOR i := 0 TO length - 1 DO
-    Files.WriteInt(w, seed); 
+    ADFiles.WriteInt(w, seed); 
     seed := (31 * seed)MOD 997 + 5
   END;
-  Files.Close(f)
+  ADFiles.Close(f)
 END OpenRandomSeq;
 
-PROCEDURE Set*(VAR r: Rider; f: Files.File);
+PROCEDURE Set*(VAR r: Rider; f: ADFiles.File);
 BEGIN
-  Files.Set(r, f, 0); 
-  Files.ReadInt(r, r.first); 
+  ADFiles.Set(r, f, 0); 
+  ADFiles.ReadInt(r, r.first); 
   r.eor := r.eof
 END Set;
 
 PROCEDURE copy*(VAR src, dest: Rider);
 BEGIN
   dest.first := src.first;
-  Files.WriteInt(dest, dest.first); 
-  Files.ReadInt(src, src.first);
+  ADFiles.WriteInt(dest, dest.first); 
+  ADFiles.ReadInt(src, src.first);
   src.eor := src.eof OR(src.first < dest.first)
 END copy;
 
 (* Modified from original source code for Oberon-2/XDS *)
-PROCEDURE ListSeq*(f: Files.File);
+PROCEDURE ListSeq*(f: ADFiles.File);
 VAR 
-  x, y, k, n: INTEGER; r: Files.Rider;
+  x, y, k, n: INTEGER; r: ADFiles.Rider;
 BEGIN
   k := 0; 
   n := 0;
-  Files.Set(r, f, 0); 
-  Files.ReadInt(r, x);
+  ADFiles.Set(r, f, 0); 
+  ADFiles.ReadInt(r, x);
   WHILE ~r.eof DO
     Out.Int(x, 6); 
     INC(k); 
-    Files.ReadInt(r, y);
+    ADFiles.ReadInt(r, y);
     IF y < x THEN 
     (*end of run*) Out.String("|"); INC(n)
     END;
