@@ -1,10 +1,10 @@
 MODULE NaturalMerging;
 
-IMPORT Out, ADFiles, Runs;
+IMPORT Out, Filez, Runs;
 
 VAR 
-  src, dst: ADFiles.File;
-  r: ADFiles.Rider;
+  src, dst: Filez.File;
+  r: Filez.Rider;
   n: INTEGER;
   ch: CHAR;
   
@@ -15,23 +15,23 @@ BEGIN
 END copyrun;
 
 (* 2.4.2 Natural Merging *)
-PROCEDURE NaturalMerge(src: ADFiles.File): ADFiles.File;
+PROCEDURE NaturalMerge(src: Filez.File): Filez.File;
 VAR 
   L: INTEGER; (*no. of runs merged*)
-  f0, f1, f2: ADFiles.File;
+  f0, f1, f2: Filez.File;
   r0, r1, r2: Runs.Rider;
 BEGIN
   Runs.Set(r2, src);
   REPEAT
-    f0 := ADFiles.New("test0"); ADFiles.Set(r0, f0, 0);
-    f1 := ADFiles.New("test1"); ADFiles.Set(r1, f1, 0);
+    f0 := Filez.New("test0"); Filez.Set(r0, f0, 0);
+    f1 := Filez.New("test1"); Filez.Set(r1, f1, 0);
     (*distribute from r2 to r0 and r1*)
     REPEAT
       copyrun(r2, r0);
       IF ~r2.eof THEN copyrun(r2, r1) END
     UNTIL r2.eof;
     Runs.Set(r0, f0); Runs.Set(r1, f1);
-    f2 := ADFiles.New(""); ADFiles.Set(r2, f2, 0);
+    f2 := Filez.New(""); Filez.Set(r2, f2, 0);
     (*merge from r0 and r1 to r2*)
     L := 0;
     REPEAT
@@ -59,7 +59,7 @@ END NaturalMerge;
 
 BEGIN
   Out.String("Generated sequence:"); Out.Ln();
-  src := ADFiles.New('Test Input');
+  src := Filez.New('Test Input');
   Runs.OpenRandomSeq(src, 200, 7);
   Runs.ListSeq(src);
   

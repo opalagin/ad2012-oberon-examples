@@ -1,28 +1,27 @@
-<*+ MAIN *>
 MODULE BalancedMerge;
 
-IMPORT Out, Files, Runs;
+IMPORT Out, Filez, Runs;
 
 CONST N = 5;
   
 VAR 
-  src, dst: Files.File;
-  r: Files.Rider;
+  src, dst: Filez.File;
+  r: Filez.Rider;
 
-PROCEDURE BalancedMerge(src: Files.File): Files.File;
+PROCEDURE BalancedMerge(src: Filez.File): Filez.File;
 VAR 
   i, j, m, tx: INTEGER;
   L, k1, k2, K1: INTEGER;
   min, x: INTEGER;
   t: ARRAY N OF INTEGER; (*index map*)
   R: Runs.Rider; (*source*)
-  f, g: ARRAY N OF Files.File;
+  f, g: ARRAY N OF Filez.File;
   r, w: ARRAY N OF Runs.Rider;
 BEGIN 
   Runs.Set(R, src);
   FOR i := 0 TO N - 1 DO
-    g[i] := Files.New(""); 
-    Files.Set(w[i], g[i], 0)
+    g[i] := Filez.New(""); 
+    Filez.Set(w[i], g[i], 0)
   END;
   (*distribute initial runs from src to g[0] ... g[N-1]*)
   j := 0; 
@@ -50,8 +49,8 @@ BEGIN
     END;
     FOR i := 0 TO k1 - 1 DO 
       (*set output riders*)
-      g[i] := Files.New(""); 
-      Files.Set(w[i], g[i], 0)
+      g[i] := Filez.New(""); 
+      Filez.Set(w[i], g[i], 0)
     END;
     (*merge from r[0] ... r[k1-1] to w[0] ... w[K1-1]*)
     FOR i := 0 TO k1 - 1 DO 
@@ -100,7 +99,7 @@ END BalancedMerge;
 
 BEGIN
   Out.String("Generated sequence:"); Out.Ln();
-  src := Files.New('Test Input');
+  src := Filez.New('Test Input');
   Runs.OpenRandomSeq(src, 200, 7);
   Runs.ListSeq(src);
     
